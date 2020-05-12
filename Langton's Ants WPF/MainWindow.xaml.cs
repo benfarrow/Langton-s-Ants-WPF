@@ -22,9 +22,10 @@ namespace Langton_s_Ants_WPF
     {
         public MainWindow()
         {
-               class Program
+            InitializeComponent();
+              public class Program
         {
-            int[][] grid;
+            grid = new int [width][Height];
             int x;
             int y;
             int dir;
@@ -34,35 +35,44 @@ namespace Langton_s_Ants_WPF
             int AntSouth = 2;
             int AntWest = 3;
 
-            public void setup()
+            public void Setup()
             {
                 size(400, 400);
                 grid = new int[width][height];
-                //board size
+                //board size, probably needs moving out of.cs
 
-                at start
-    
-            dir = AntNorth;
-                //facing direction start
+
+                x = 200;
+                y = 200;
+                dir = AntNorth;
+                //ant facing direction and position at start
             }
 
-            public void turnRight()
+            public void TurnRight()
             {
                 dir++;
+                if (dir > AntWest)
+                {
+                    dir = AntNorth;
+                }
             }
 
             public void turnLeft()
             {
                 dir--;
+                if (dir <AntNorth)
+                {
+                    dir = AntWest;
+                }
             }
-            //cycles between north->east->south->west by +1 -1 depending if left or right
+            //cycles between north->east->south->west by +1 -1 depending if left or right, and if its west (3) cycles back to north for clockwise (0) or vice versa.
 
 
-            public void moveForward()
+            public void MoveForward()
             {
                 if (dir == AntNorth)
                 {
-                    y--;
+                    y++;
                 }
                 else if (dir == AntEast)
                 {
@@ -70,7 +80,7 @@ namespace Langton_s_Ants_WPF
                 }
                 else if (dir == AntSouth)
                 {
-                    y++;
+                    y--;
                 }
                 else if (dir == AntWest)
                 {
@@ -94,53 +104,58 @@ namespace Langton_s_Ants_WPF
                 {
                     y = height - 1;
                 }
+                //wrap around edge of grid
             }
 
-            public void draw()
+            public void Draw()
             {
                 backgroundColor.White;
                 for (int n = 0; n < 100; n++)
+                    //lets you change rate at which ant moves (frames) probably needs moving out of .cs
+
                 {
                     int state = grid[x][y];
 
                     if (state == 0)
                     {
-                        turnRight();
+                        TurnRight();
                         grid[x][y] = 1;
-                        moveForward();
+                        MoveForward();
                     }
                     else if (state == 1)
                     {
                         turnLeft();
                         grid[x][y] = 0;
-                        moveForward();
+                        MoveForward();
                     }
                 }
                 //moving on grid, state determins if black or white, this pulled from x,y co-or 2d array of grid. 0 (black) pulls turn right then move forward function.
                 //1 (white)
 
-                loadPixels();
-                for (int i = 0; i < width; i++)
-                {
-                    for (int j = 0; j < height; j++)
+                LoadPixels();
+                
+                    for (int i = 0; i < width; i++)
                     {
-                        int pix = i + width * j;
-                        if (grid[i][j] == 0)
+                        for (int j = 0; j < height; j++)
                         {
-                            pixels[pix] = Color.White;
-                        }
-                        else
-                        {
-                            pixels[pix] = Color.Black;
+                            int pix = i + width * j;
+                            if (grid[i][j] == 0)
+                            {
+                                pixels[pix] = Color.White;
+                            }
+                            else
+                            {
+                                pixels[pix] = Color.Black;
 
+                            }
                         }
+                        //for loop where i (x value for loadPixels) checks where ant moved then draws that square 
                     }
-                    //for loop where i (x value for loadPixels) checks where ant moved then draws that square 
-                }
+                
                 UpdatePixels();
             }
 
-        }
+        //loadPixels and UpdatePixels needs to be changed for xaml, possibly put into non cs code
     }
     InitializeComponent();
         }
