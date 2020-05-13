@@ -25,7 +25,7 @@ namespace Langton_s_Ants_WPF
             InitializeComponent();
               public class Program
         {
-            grid = new int [width][Height];
+            
             int x;
             int y;
             int dir;
@@ -37,9 +37,6 @@ namespace Langton_s_Ants_WPF
 
             public void Setup()
             {
-                size(400, 400);
-                grid = new int[width][height];
-                //board size, probably needs moving out of.cs
 
 
                 x = 200;
@@ -109,7 +106,7 @@ namespace Langton_s_Ants_WPF
 
             public void Draw()
             {
-                backgroundColor.White;
+                //backgroundColor.White;
                 for (int n = 0; n < 100; n++)
                     //lets you change rate at which ant moves (frames) probably needs moving out of .cs
 
